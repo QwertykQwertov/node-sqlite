@@ -5,7 +5,7 @@ const db = new sqlite3.Database(dbName)
 db.serialize(() => {
   const sql = `
     CREATE TABLE IF NOT EXISTS users
-    (id integer primary key, gid, gmail, payment_type, payment_date DATE, active BOOL, subscription_end_date DATE)
+    (id integer primary key, gid, gmail, payment_type, payment_date, active, subscription_end_date)
   `
   db.run(sql)
 })
@@ -27,6 +27,21 @@ class User {
   static delete(gid, cb) {
     if (!gid) return cb(new Error('Please provide an google id'))
     db.run('DELETE FROM users WHERE id = ?', gid, cb)
+  }
+
+  static checkSubscribe(data, cb) {
+    const sql = 'SELECT active FROM users WHERE gid=?'
+    db.run(sql, data.gid, cb)
+  }
+
+  static addPayment() {
+    // Добавить проверку на существование пользователя
+    const sql = 'UPDATE users SET payment_type=?, payment_date=?, active=1, subscription_end_date=? WHERE gid=?'
+    db.run(sql, data.payment_type, data.payment_date, data.subscription_end_date, data.gid, cb)
+  }
+
+  static checkEndDateSubscribe() {
+
   }
 }
 

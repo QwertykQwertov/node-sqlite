@@ -9,7 +9,26 @@
     <button onclick="create()">Создать пользователя</button>
     <button onclick="getAll()">Получить пользователей</button>
     <button onclick="deleteByGid()">Удалить пользователя</button>
-    <button onclick="GetByGid()">Получить по id</button>
+    <button onclick="getByGid()">Получить по id</button>
+    <button onclick="goToPayment()">Оплатить</button>
+    <link
+      href="https://api.cryptocloud.plus/static/pay_btn/css/app.css"
+      rel="stylesheet"
+    />
+    <vue-widget
+      shop_id="lacOwnNUTPrGDntt"
+      api_key="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiTXprMk5qWT0iLCJ0eXBlIjoicHJvamVjdCIsInYiOiJlODFhODg4MjhkMzE4N2I1YTZkZjJhY2YzNjdjNDUzMzk4MjA3M2IwODVjNjQxZWNmZTc5YmIyNzdjYTk3ODJlIiwiZXhwIjo4ODEzODQwNDUyOH0.Gmp2pwHT_TVU_s49Qrw3vhuu6K8PADF49M75shQiq4g"
+      background="#fff"
+      color="#000"
+      border_color="#000"
+      logo="color"
+      width="350px"
+      currency="USDT"
+      amount="1"
+      text_btn="Pay with CryptoCloud"
+      order_id="123w3"
+    ></vue-widget>
+    <script src="https://api.cryptocloud.plus/static/pay_btn/js/app.js"></script>
   </body>
 </html>
 
@@ -49,5 +68,9 @@
       .then((res) => res.json())
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
+  }
+
+  function goToPayment() {
+    window.location.href = "/payment.html";
   }
 </script>
