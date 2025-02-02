@@ -1,34 +1,34 @@
 const sqlite3 = require('sqlite3').verbose()
-const dbName = 'later.sqlite'
+const dbName = 'users.sqlite'
 const db = new sqlite3.Database(dbName)
 
 db.serialize(() => {
   const sql = `
-    CREATE TABLE IF NOT EXISTS articles
-    (id integer primary key, title, content TEXT)
+    CREATE TABLE IF NOT EXISTS users
+    (id integer primary key, gid, gmail, payment_type, payment_date DATE, active BOOL, subscription_end_date DATE)
   `
   db.run(sql)
 })
 
-class Article {
+class User {
   static all(cb) {
-    db.all('SQLQCT * FROM articles', cb)
+    db.all('SELECT * FROM users', cb)
   }
 
-  static find(id, cb) {
-    db.get('SELECT * FROM articles id = ?', id, cb)
+  static find(gid, cb) {
+    db.get('SELECT * FROM users gid = ?', gid, cb)
   }
 
   static create(data, cb) {
-    const sql = 'INSERT INTO articles(title, content) VALUES (?,?)'
-    db.run(sql, data.title, data.content, cb)
+    const sql = 'INSERT INTO users(gid, gmail, payment_type, payment_date, active, subscription_end_date) VALUES (?,?,?,?,?,?)'
+    db.run(sql, data.gid, data.gmail, data.payment_type, data.payment_date, data.active, data.subscription_end_date, cb)
   }
 
-  static delete(id, cb) {
-    if (!id) return cb(new Error('Please provide an id'))
-    db.run('DELETE FROM articles WHERE id = ?', id, cb)
+  static delete(gid, cb) {
+    if (!gid) return cb(new Error('Please provide an google id'))
+    db.run('DELETE FROM users WHERE id = ?', gid, cb)
   }
 }
 
 module.exports = db
-module.exports.Article = Article
+module.exports.User = User

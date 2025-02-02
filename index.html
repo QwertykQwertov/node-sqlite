@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="create()">Создать пользователя</button>
+    <button onclick="getAll()">Получить пользователей</button>
+    <button onclick="deleteByGid()">Удалить пользователя</button>
+    <button onclick="GetByGid()">Получить по id</button>
+  </body>
+</html>
+
+<script>
+  function create() {
+    let date = new Date();
+    date = date.toISOString();
+    // date = date.slice(0, 10);
+    const user = {
+      gid: Math.random(),
+      gmail: "test@gmail.com",
+      payment_type: "ukassa",
+      payment_date: date,
+      active: true,
+      subscription_end_date: null,
+    };
+
+    fetch("http://127.0.0.1:3000/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  }
+
+  function getById() {}
+
+  function deleteById() {}
+
+  function getAll() {
+    fetch("http://127.0.0.1:3000/users", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  }
+</script>
